@@ -35,14 +35,13 @@ const Component = styled(Box)`
 const Users = () => {
   const [users, setUsers] = useState([]);
 
-  const API_URL = `${process.env.REACT_APP_MY_KEY}`;
-
   const removeEntry = (id) => {
     const updatedUsers = users.filter((user) => user.id !== id);
     setUsers(updatedUsers);
   };
 
   useEffect(() => {
+    const API_URL = `${process.env.REACT_APP_MY_KEY}`;
     const getData = async () => {
       const response = await axios.get(API_URL);
       const parsedResponse = JSON.parse(response.data.body);
