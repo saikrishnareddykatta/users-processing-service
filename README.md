@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+# Users Processing System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+As a forward-thinking AWS enthusiast, I spearheaded the successful deployment of a dynamic static web application on Amazon Web Services (AWS), showcasing my prowess in both frontend and backend development.
 
-## Available Scripts
+For the frontend, I leveraged the power of React, Material UI, and Axios to craft a user-friendly and visually appealing interface. The seamless integration of these technologies not only ensured an intuitive user experience but also demonstrated my proficiency in cutting-edge frontend frameworks and libraries.
 
-In the project directory, you can run:
+On the backend, I implemented a robust infrastructure using DynamoDB to store and manage a comprehensive data table containing user details such as name, email, phone, salary, and age. The core functionality was achieved through the seamless coordination of Lambda functions and API Gateway services, enabling the creation of a streamlined process to retrieve all user data directly within the browser.
 
-### `npm start`
+To ensure a seamless and reliable user experience, I utilized the power of S3 buckets to host the static web application, providing a scalable and secure solution. This end-to-end project highlights my ability to design, develop, and deploy sophisticated web applications that seamlessly integrate frontend and backend technologies.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Excited to continue pushing the boundaries of cloud computing and delivering innovative solutions to drive business success.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Tech Stack:
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- React 18.2.0
+- Axios 1.6.2
+- Material UI 5.14.20
+- AWS IAM
+- AWS S3
+- AWS Lambda
+- AWS DynamoDB
+- AWS API Gateway
