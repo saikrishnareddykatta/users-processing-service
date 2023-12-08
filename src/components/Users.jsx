@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Box,
   Table,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
   TableBody,
   styled,
   Button,
+  CircularProgress,
 } from "@mui/material";
 
 import axios from "axios";
@@ -17,6 +17,9 @@ const Component = styled(Box)`
   width: 80%;
   margin: 50px auto;
   & h4 {
+    margin-bottom: 20px;
+  }
+  & > div > table {
     margin-bottom: 20px;
   }
   & > div > table > thead {
@@ -32,72 +35,108 @@ const Component = styled(Box)`
   }
 `;
 
-const Users = () => {
+const Users = (props) => {
+  const { setDisplayForm } = props;
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const API_URL = `${process.env.REACT_APP_MY_KEY}`;
 
-  const removeEntry = (id) => {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    setUsers(updatedUsers);
+  const getData = useCallback(async () => {
+    const response = await axios.get(
+      API_URL,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    setUsers(response.data.users.Items);
+    setIsLoading(false);
+  }, [API_URL]);
+
+  const updateUser = () => {
+    console.log("*** Update User");
   };
 
+  // const deleteUser = async (userID) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await axios.delete(`${API_URL}/${userID}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     console.log("response", response);
+  //     getData();
+  //   } catch (error) {
+  //     console.log("Error: ", error);
+  //   }
+  // };
+
   useEffect(() => {
-    const API_URL = `${process.env.REACT_APP_MY_KEY}`;
-    const getData = async () => {
-      const response = await axios.get(
-        API_URL,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setUsers(response.data.users.Items);
-    };
     getData();
-  }, []);
+  }, [getData]);
 
   return (
     <Component>
-      <Typography variant="h4" gutterBottom>
-        Users Processing System
-      </Typography>
-      <Box>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Salary</TableCell>
-              <TableCell>Age</TableCell>
-              <TableCell>Remove Entry</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.phone}</TableCell>
-                <TableCell>{user.salary}</TableCell>
-                <TableCell>{user.age}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={() => removeEntry(user.id)}
-                  >
-                    Remove
-                  </Button>
-                </TableCell>
+      {isLoading && <CircularProgress size={48} color="secondary" />}
+      {!isLoading && (
+        <Box>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone</TableCell>
+                <TableCell>Salary</TableCell>
+                <TableCell>Age</TableCell>
+                <TableCell>Update Entry</TableCell>
+                <TableCell>Remove Entry</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
+            </TableHead>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>{user.salary}</TableCell>
+                  <TableCell>{user.age}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => updateUser(user.id)}
+                    >
+                      Update
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      // onClick={() => deleteUser(user.id)}
+                    >
+                      Remove
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Button
+            type="submit"
+            variant="contained"
+            color="info"
+            onClick={() => setDisplayForm(true)}
+          >
+            Create a User
+          </Button>
+        </Box>
+      )}
     </Component>
   );
 };
