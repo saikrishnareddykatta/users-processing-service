@@ -36,7 +36,7 @@ const Component = styled(Box)`
 `;
 
 const Users = (props) => {
-  const { setDisplayForm } = props;
+  const { setDisplayForm, setUpdatedUser, setUpdateUserClick } = props;
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const API_URL = `${process.env.REACT_APP_MY_KEY}`;
@@ -55,24 +55,28 @@ const Users = (props) => {
     setIsLoading(false);
   }, [API_URL]);
 
-  const updateUser = () => {
-    console.log("*** Update User");
+  const updateUser = (user) => {
+    setDisplayForm(true);
+    setUpdatedUser(user);
+    setUpdateUserClick(true);
+    console.log("***Update User", user);
   };
 
-  // const deleteUser = async (userID) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await axios.delete(`${API_URL}/${userID}`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     console.log("response", response);
-  //     getData();
-  //   } catch (error) {
-  //     console.log("Error: ", error);
-  //   }
-  // };
+  const deleteUser = async (userID) => {
+    setIsLoading(true);
+    try {
+      await axios.delete(`${API_URL}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: { id: `${userID}` },
+      });
+      // console.log("***response", response);
+      getData();
+    } catch (error) {
+      console.log("***Error: ", error);
+    }
+  };
 
   useEffect(() => {
     getData();
@@ -109,7 +113,7 @@ const Users = (props) => {
                     <Button
                       variant="contained"
                       color="secondary"
-                      onClick={() => updateUser(user.id)}
+                      onClick={() => updateUser(user)}
                     >
                       Update
                     </Button>
@@ -118,7 +122,7 @@ const Users = (props) => {
                     <Button
                       variant="contained"
                       color="error"
-                      // onClick={() => deleteUser(user.id)}
+                      onClick={() => deleteUser(user.id)}
                     >
                       Remove
                     </Button>

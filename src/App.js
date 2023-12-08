@@ -6,6 +6,8 @@ import { Box, Typography } from "@mui/material";
 
 function App() {
   const [displayForm, setDisplayForm] = useState(false);
+  const [updateUserClick, setUpdateUserClick] = useState(false);
+  const [updatedUser, setUpdatedUser] = useState({});
   return (
     <div className="App">
       <Box>
@@ -13,8 +15,22 @@ function App() {
           Users Processing System
         </Typography>
       </Box>
-      {!displayForm && <Users setDisplayForm={setDisplayForm} />}
-      {displayForm && <UserForm setDisplayForm={setDisplayForm} />}
+      {!displayForm && (
+        <Users
+          setDisplayForm={setDisplayForm}
+          setUpdatedUser={setUpdatedUser}
+          setUpdateUserClick={setUpdateUserClick}
+        />
+      )}
+      {displayForm && (
+        <UserForm
+          updatedUser={updatedUser}
+          updateUserClick={updateUserClick}
+          setUpdateUserClick={setUpdateUserClick}
+          setUpdatedUser={setUpdatedUser}
+          setDisplayForm={setDisplayForm}
+        />
+      )}
     </div>
   );
 }

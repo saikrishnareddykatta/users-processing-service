@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import { TextField, Button, Container, Typography, Grid } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 const UserForm = (props) => {
-  const { setDisplayForm } = props;
+  const {
+    updateUserClick,
+    updatedUser,
+    setDisplayForm,
+    setUpdateUserClick,
+    setUpdatedUser,
+  } = props;
   const uniqueId = uuidv4();
 
-  const [formData, setFormData] = useState({
+  let defaultObject = {
     id: uniqueId,
     name: "",
     username: "",
@@ -15,13 +21,25 @@ const UserForm = (props) => {
     phone: "",
     salary: "",
     age: "",
-  });
+  };
+
+  let stateObject = {};
+
+  if (updateUserClick) {
+    stateObject = updatedUser;
+  } else {
+    stateObject = defaultObject;
+  }
+
+  const [formData, setFormData] = useState(stateObject);
 
   const [errors, setErrors] = useState({
     phone: "",
     salary: "",
     age: "",
   });
+
+  const API_URL = `${process.env.REACT_APP_MY_KEY}`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,8 +56,23 @@ const UserForm = (props) => {
     }));
   };
 
+  const updateuserHandler = async () => {
+    try {
+      const response = await axios.put(API_URL, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setUpdateUserClick(false);
+      setUpdatedUser({});
+      setDisplayForm(false);
+      console.log("Update successful:", response);
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
   const createUserHandler = async () => {
-    const API_URL = `${process.env.REACT_APP_MY_KEY}`;
     try {
       const response = await axios.post(API_URL, formData, {
         headers: {
@@ -51,6 +84,13 @@ const UserForm = (props) => {
     } catch (error) {
       console.log("***error", error);
     }
+  };
+
+  const handleCancel = () => {
+    setUpdateUserClick(false);
+    setUpdatedUser({});
+    setDisplayForm(false);
+    console.log("***cancel");
   };
 
   const handleSubmit = (e) => {
@@ -80,8 +120,12 @@ const UserForm = (props) => {
 
     // If validation passes, proceed with form submission
     if (isPhoneValid && isSalaryValid && isAgeValid) {
-      console.log("***Form submitted with data:", formData);
-      createUserHandler();
+      // console.log("***Form submitted with data:", formData);
+      if (updateUserClick) {
+        updateuserHandler();
+      } else {
+        createUserHandler();
+      }
     }
   };
 
@@ -156,9 +200,24 @@ const UserForm = (props) => {
           helperText={errors.age}
         />
         <div style={{ margin: "20px 0" }}></div>
-        <Button type="submit" variant="contained" color="info" fullWidth>
-          Submit
-        </Button>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Button
+              type="button"
+              variant="contained"
+              color="secondary"
+              fullWidth
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button type="submit" variant="contained" color="info" fullWidth>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </form>
     </Container>
   );
