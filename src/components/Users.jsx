@@ -43,9 +43,16 @@ const Users = () => {
   useEffect(() => {
     const API_URL = `${process.env.REACT_APP_MY_KEY}`;
     const getData = async () => {
-      const response = await axios.get(API_URL);
-      const parsedResponse = JSON.parse(response.data.body);
-      setUsers(parsedResponse.Items);
+      const response = await axios.get(
+        API_URL,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setUsers(response.data.users.Items);
     };
     getData();
   }, []);
