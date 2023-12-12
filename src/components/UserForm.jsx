@@ -97,6 +97,9 @@ const UserForm = (props) => {
     e.preventDefault();
 
     // Validation
+    const isNameValid = formData.name.trim() !== "";
+    const isUsernameValid = formData.username.trim() !== "";
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
     const isPhoneValid = /^\d{10}$/.test(formData.phone);
     const isSalaryValid =
       /^\d{1,9}$/.test(formData.salary) && formData.salary >= 0;
@@ -107,6 +110,9 @@ const UserForm = (props) => {
 
     // Update error messages
     setErrors({
+      name: isNameValid ? "" : "Name is required.",
+      username: isUsernameValid ? "" : "Username is required.",
+      email: isEmailValid ? "" : "Invalid email address.",
       phone: isPhoneValid
         ? ""
         : "Invalid phone number. It should be exactly 10 digits.",
@@ -119,7 +125,14 @@ const UserForm = (props) => {
     });
 
     // If validation passes, proceed with form submission
-    if (isPhoneValid && isSalaryValid && isAgeValid) {
+    if (
+      isNameValid &&
+      isUsernameValid &&
+      isEmailValid &&
+      isPhoneValid &&
+      isSalaryValid &&
+      isAgeValid
+    ) {
       // console.log("***Form submitted with data:", formData);
       if (updateUserClick) {
         updateuserHandler();
@@ -143,6 +156,8 @@ const UserForm = (props) => {
           fullWidth
           margin="normal"
           autoComplete="off"
+          error={!!errors.name}
+          helperText={errors.name}
         />
         <TextField
           label="Username"
@@ -152,6 +167,8 @@ const UserForm = (props) => {
           fullWidth
           margin="normal"
           autoComplete="off"
+          error={!!errors.username}
+          helperText={errors.username}
         />
         <TextField
           label="Email"
@@ -162,6 +179,8 @@ const UserForm = (props) => {
           fullWidth
           margin="normal"
           autoComplete="off"
+          error={!!errors.email}
+          helperText={errors.email}
         />
         <TextField
           label="Phone"
